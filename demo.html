@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="sheet"></div>
+  
+  <script src="./customlogbook.js"></script>
+  <script>
+  (function() {
+    'use strict'
+
+    const LABELS = [
+      'PARADO',
+      'LENTA',
+      'MOVIMENTO'
+    ];
+
+    const sheet = new LogBook(document.getElementById('sheet'), {
+      width: 1800,
+      height: 500,
+      lines: LABELS.length,
+      labels: LABELS
+    });
+
+    // get data
+    setTimeout(() => {
+      const data = [
+        {
+          index: LABELS.indexOf('PARADO'),
+          begin: 0,
+          end: 8
+        },
+        {
+          index: LABELS.indexOf('LENTA'),
+          begin: 8,
+          end: 8.25
+        },
+        {
+          index: LABELS.indexOf('MOVIMENTO'),
+          begin: 8.25,
+          end: 12
+        },
+        {
+          index: LABELS.indexOf('PARADO'),
+          begin: 12,
+          end: 24
+        },
+        // {
+        //   status: LogBookChart.LENTA,
+        //   begin: 6,
+        //   end: 6.25
+        // },
+        // {
+        //   status: LogBookChart.MOVIMENTO,
+        //   begin: 6.25,
+        //   end: 11,
+        //   location: 'PASSO FUNDO, RS',
+        //   description: 'COMEÇO EXPEDIENTE'
+        // },
+        // {
+        //   status: LogBookChart.PARADO,
+        //   begin: 11,
+        //   end: 12,
+        //   location: 'VACARIA, RS',
+        //   description: 'ALMOÇO'
+        // },
+        // {
+        //   status: LogBookChart.MOVIMENTO,
+        //   begin: 12,
+        //   end: 13.75
+        // },
+        // {
+        //   status: LogBookChart.PARADO,
+        //   begin: 13.75,
+        //   end: 15.75,
+        //   location: 'LAJES, SC',
+        //   description: 'CARREGAMENTO'
+        // },
+        // {
+        //   status: LogBookChart.MOVIMENTO,
+        //   begin: 15.75,
+        //   end: 17
+        // },
+        // {
+        //   status: LogBookChart.PARADO,
+        //   begin: 17,
+        //   end: 18,
+        //   location: 'FLORIANÓPOLIS, SC',
+        //   description: 'JANTA'
+        // },
+        // {
+        //   status: LogBookChart.MOVIMENTO,
+        //   begin: 18,
+        //   end: 20
+        // },
+        // {
+        //   status: LogBookChart.PARADO,
+        //   begin: 20,
+        //   end: 24,
+        //   location: 'FLORIANÓPOLIS, SC',
+        //   description: 'FIM EXPEDIENTE'
+        // }
+      ];
+
+      // sheet.setTitle('DESLOCAMENTO');
+      // sheet.setDate('28/11/2018');
+      // sheet.setDriver('EDUARDO BACKES');
+      sheet.render(data);
+    }, 0);
+  })();
+  </script>
+
+</body>
+</html>
