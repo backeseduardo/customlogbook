@@ -24,7 +24,6 @@
     const sheet = new LogBook(document.getElementById('sheet'), {
       width: 1800,
       height: 500,
-      lines: LABELS.length,
       labels: LABELS
     });
 
@@ -32,22 +31,22 @@
     setTimeout(() => {
       const data = [
         {
-          index: LABELS.indexOf('PARADO'),
+          label: LogBook.PARADO,
           begin: 0,
           end: 8
         },
         {
-          index: LABELS.indexOf('LENTA'),
+          label: LogBook.LENTA,
           begin: 8,
           end: 8.25
         },
         {
-          index: LABELS.indexOf('MOVIMENTO'),
+          label: LogBook.MOVIMENTO,
           begin: 8.25,
           end: 12
         },
         {
-          index: LABELS.indexOf('PARADO'),
+          label: LogBook.PARADO,
           begin: 12,
           end: 24
         },

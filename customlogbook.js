@@ -8,9 +8,10 @@ function LogBook(parent, options = {}) {
   
   this.options.columnWidth = (this.options.width - 200) / 24;
 
-  if (!this.options.lines) {
-    throw 'Lines should be defined';
+  if (!this.options.labels) {
+    throw 'Labels should be defined';
   }
+  this.options.lines = this.options.labels.length;
 
   this.parent = parent;
 
@@ -33,6 +34,9 @@ function LogBook(parent, options = {}) {
   if (this.options.labels) {
     this.options.labels.forEach((label, i) => {
       this.cx.fillText(label, 10, 40 * (i + 1) + 25);
+
+      // cria as constantes para serem usadas nos dados
+      LogBook[label] = i;
     });
   }
 
@@ -91,11 +95,11 @@ LogBook.prototype.render = function(data) {
   this.cx.strokeStyle = 'blue';
   this.cx.lineWidth = 5;
   // this.cx.moveTo(100, 50);
-  this.cx.moveTo(100, 40 * data[0].index + 60);
+  this.cx.moveTo(100, 40 * data[0].label + 60);
 
   data.forEach(row => {
-    this.cx.lineTo(100 + (row.begin * this.options.columnWidth), 40 * row.index + 60);
-    this.cx.lineTo(100 + (row.end * this.options.columnWidth), 40 * row.index + 60);
+    this.cx.lineTo(100 + (row.begin * this.options.columnWidth), 40 * row.label + 60);
+    this.cx.lineTo(100 + (row.end * this.options.columnWidth), 40 * row.label + 60);
   });
 
   // this.cx.save();
