@@ -5,6 +5,8 @@ function LogBook(parent, options = {}) {
 
   this.options.width = this.options.width || 1200;
   this.options.height = this.options.height || 580;
+  // translate options can se the base position for the chart
+  this.options.translate = this.options.translate || { x: 0, y: 0 };
   
   this.options.columnWidth = (this.options.width - 200) / 24;
 
@@ -28,7 +30,7 @@ function LogBook(parent, options = {}) {
   this.cx.lineWidth = 1;
   this.cx.font = '10px Monospace';
 
-  this.cx.translate(0, 100);
+  this.cx.translate(this.options.translate.x, this.options.translate.y);
 
   // labels
   if (this.options.labels) {
@@ -43,7 +45,11 @@ function LogBook(parent, options = {}) {
   // linhas horizontais, onde as linhas significam espaçoes
   for (let i = 0; i <= this.options.lines; i++) {
     this.cx.moveTo(100, 40 * (i + 1));
-    this.cx.lineTo(this.options.width - 100, 40 * (i + 1));
+    if (i > 0) {
+      this.cx.lineTo(this.options.width - 20, 40 * (i + 1));
+    } else {
+      this.cx.lineTo(this.options.width - 100, 40 * (i + 1));
+    }
   }
 
   // linhas das horas
@@ -97,109 +103,65 @@ LogBook.prototype.render = function(data) {
   // this.cx.moveTo(100, 50);
   this.cx.moveTo(100, 40 * data[0].label + 60);
 
+  const totais = [];
+  let total = 0;
   data.forEach(row => {
+    // this.cx.lineTo(100 + (row.begin * this.options.columnWidth), 40 * row.label + 60);
+    // this.cx.lineTo(100 + (row.end * this.options.columnWidth), 40 * row.label + 60);
     this.cx.lineTo(100 + (row.begin * this.options.columnWidth), 40 * row.label + 60);
     this.cx.lineTo(100 + (row.end * this.options.columnWidth), 40 * row.label + 60);
+
+    // totalizador dos labels
+    if (!totais[row.label]) {
+      totais[row.label] = 0;
+    }
+    totais[row.label] += row.end - row.begin;
+    total += row.end - row.begin;
   });
 
   // this.cx.save();
-
-  // this.cx.font = '26px Monospace';
-  // let foraJornada = 0,
-  //   emEspera = 0,
-  //   emDirecao = 0,
-  //   emJornada = 0;
-  
-  // data.forEach(row => {
-  //   if (row.status === LogBook.FORA_JORNADA) {
-  //     foraJornada += row.end - row.begin;
-  //   } else if (row.status === LogBook.ESPERA) {
-  //     emEspera += row.end - row.begin;
-  //   } else if (row.status === LogBook.DIRECAO) {
-  //     emDirecao += row.end - row.begin;
-  //   } else if (row.status === LogBook.JORNADA) {
-  //     emJornada += row.end - row.begin;
-  //   }
+  // this.cx.font = '20px Monospace';
+  // totais.forEach((total, label) => {
+  //   this.cx.fillText(total, this.options.width - 95, 40 * label + 70);
   // });
-
-  // let total = foraJornada + emEspera + emDirecao + emJornada;
-  
-  // this.cx.fillText(foraJornada, 1070, 60);
-  // this.cx.fillText(emEspera, 1070, 120);
-  // this.cx.fillText(emDirecao, 1070, 180);
-  // this.cx.fillText(emJornada, 1070, 240);
-  // this.cx.fillText(total, 1070, 300);
-
+  // this.cx.fillText(total, this.options.width - 95, 40 * this.options.lines + 70);
   // this.cx.restore();
-
   this.cx.stroke();
 
+  // this.cx.save();
   // this.cx.beginPath();
-
-  // // this.cx.save();
-  // // this.cx.translate(100,300);
-  // // this.cx.rotate(-0.5*Math.PI);
-
-  // // var rText = 'Rotated Text';
-  // // this.cx.fillText(rText , 0, 280);
-  // // this.cx.restore();
-  
   // this.cx.strokeStyle = 'black';
-  // this.cx.lineWidth = 2;
-  // data.forEach(row => {
-  //   if (row.hasOwnProperty('location')) {
-  //     this.cx.moveTo(100 + (row.begin * (10 * 4)), 250);
-  //     this.cx.lineTo(100 + (row.begin * (10 * 4)), 300);
-  //     // this.cx.lineTo(100 + (row.begin * (10 * 4)), 430);
-  //     this.cx.lineTo(100 + (row.begin * (10 * 4)) - 135, 400);
-
-  //     this.cx.save();
-  //     this.cx.font = '16px Monospace';
-  //     this.cx.translate(100 + (row.begin * (10 * 4)) - 140, 390);
-  //     this.cx.rotate(-0.2*Math.PI);
-  //     // this.cx.translate(100 + (row.begin * (10 * 4)) - 10, 430);
-  //     // this.cx.rotate(-0.5*Math.PI);
-  //     this.cx.fillText(row.location, 0, 0, 175);
-  //     this.cx.fillText(row.description, 0, 35, 175);
-  //     this.cx.restore();
-  //   }
-  // });
-
+  // this.cx.lineWidth = 1;
+  // this.cx.moveTo(this.options.width - 95, 40 * this.options.lines + 75);
+  // this.cx.lineTo(this.options.width - 20, 40 * this.options.lines + 75);
   // this.cx.stroke();
+  // this.cx.restore();
 };
 
-LogBook.prototype.setTitle = function(text) {
+LogBook.prototype.addText = function(textOpts) {
+  textOpts = textOpts || {};
+  textOpts.text = textOpts.text || '';
+  textOpts.fontSize = textOpts.fontSize || 26;
+  textOpts.fontFamily = textOpts.fontFamily || 'Monospace';
+  textOpts.x = textOpts.x || 0;
+  textOpts.y = textOpts.y || 0;
+  textOpts.xBasePos = textOpts.xBasePos || 'left'; // 'left' || 'center' || 'right'
+
   this.cx.save();
 
-  this.cx.translate(0, -100);
-  this.cx.font = '26px Monospace';
+  // sets the translate to the options' opposite, this let the text always at the absolute translate(0, 0)
+  this.cx.translate(this.options.translate.x * -1, this.options.translate.y * -1);
+  this.cx.font = `${textOpts.fontSize}px ${textOpts.fontFamily}`;
   
-  let width = this.cx.measureText(text).width;
-  this.cx.fillText(text, 1200 / 2 - width / 2, 30);
-
-  this.cx.restore();
-};
-
-LogBook.prototype.setDate = function(text) {
-  this.cx.save();
-
-  this.cx.translate(0, -100);
-  this.cx.font = '12px Monospace';
-  
-  this.cx.fillText(`DATA: ${text}`, 100, 70);
-
-  this.cx.restore();
-};
-
-LogBook.prototype.setDriver = function(text) {
-  this.cx.save();
-
-  this.cx.translate(0, -100);
-  this.cx.font = '12px Monospace';
-  
-  text = `CONDUTOR: ${text}`;
-  let width = this.cx.measureText(text).width;
-  this.cx.fillText(text, 1060 - width, 70);
+  if (textOpts.xBasePos === 'right') {
+    let width = this.cx.measureText(textOpts.text).width;
+    this.cx.fillText(textOpts.text, textOpts.x - width, textOpts.y);
+  } else if (textOpts.xBasePos === 'center') {
+    let width = this.cx.measureText(textOpts.text).width;
+    this.cx.fillText(textOpts.text, textOpts.x - width / 2, textOpts.y);
+  } else {
+    this.cx.fillText(textOpts.text, textOpts.x, textOpts.y);
+  }
 
   this.cx.restore();
 };

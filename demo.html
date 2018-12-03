@@ -24,7 +24,11 @@
     const sheet = new LogBook(document.getElementById('sheet'), {
       width: 1800,
       height: 500,
-      labels: LABELS
+      labels: LABELS,
+      translate: {
+        x: 0,
+        y: 25
+      }
     });
 
     // get data
@@ -49,68 +53,26 @@
           label: LogBook.PARADO,
           begin: 12,
           end: 24
-        },
-        // {
-        //   status: LogBookChart.LENTA,
-        //   begin: 6,
-        //   end: 6.25
-        // },
-        // {
-        //   status: LogBookChart.MOVIMENTO,
-        //   begin: 6.25,
-        //   end: 11,
-        //   location: 'PASSO FUNDO, RS',
-        //   description: 'COMEÇO EXPEDIENTE'
-        // },
-        // {
-        //   status: LogBookChart.PARADO,
-        //   begin: 11,
-        //   end: 12,
-        //   location: 'VACARIA, RS',
-        //   description: 'ALMOÇO'
-        // },
-        // {
-        //   status: LogBookChart.MOVIMENTO,
-        //   begin: 12,
-        //   end: 13.75
-        // },
-        // {
-        //   status: LogBookChart.PARADO,
-        //   begin: 13.75,
-        //   end: 15.75,
-        //   location: 'LAJES, SC',
-        //   description: 'CARREGAMENTO'
-        // },
-        // {
-        //   status: LogBookChart.MOVIMENTO,
-        //   begin: 15.75,
-        //   end: 17
-        // },
-        // {
-        //   status: LogBookChart.PARADO,
-        //   begin: 17,
-        //   end: 18,
-        //   location: 'FLORIANÓPOLIS, SC',
-        //   description: 'JANTA'
-        // },
-        // {
-        //   status: LogBookChart.MOVIMENTO,
-        //   begin: 18,
-        //   end: 20
-        // },
-        // {
-        //   status: LogBookChart.PARADO,
-        //   begin: 20,
-        //   end: 24,
-        //   location: 'FLORIANÓPOLIS, SC',
-        //   description: 'FIM EXPEDIENTE'
-        // }
+        }
       ];
 
       // sheet.setTitle('DESLOCAMENTO');
       // sheet.setDate('28/11/2018');
       // sheet.setDriver('EDUARDO BACKES');
       sheet.render(data);
+      sheet.addText({
+        text: 'TÍTULO',
+        x: 1800 / 2,
+        y: 25,
+        xBasePos: 'center'
+      });
+      sheet.addText({
+        text: 'TESTE',
+        x: 0,
+        y: 20,
+        fontSize: 10,
+        xBasePos: 'left' // 'left' || 'center' || 'right'
+      });
     }, 0);
   })();
   </script>
