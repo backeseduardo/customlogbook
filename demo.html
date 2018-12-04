@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Demo</title>
 </head>
 <body>
 
@@ -22,12 +22,15 @@
     ];
 
     const sheet = new LogBook(document.getElementById('sheet'), {
-      width: 1800,
+      width: 1000,
       height: 400,
       labels: LABELS,
       translate: {
         x: 0,
         y: 25
+      },
+      lang: {
+        totalTime: 'Total horas'
       }
     });
 
@@ -43,7 +46,7 @@
           label: LogBook.LENTA,
           begin: 8,
           end: 8.25,
-          description: 'teste'
+          // description: 'teste'
         },
         {
           label: LogBook.MOVIMENTO,
@@ -55,7 +58,7 @@
           label: LogBook.PARADO,
           begin: 12,
           end: 24,
-          description: 'teste'
+          // description: 'teste'
         }
       ];
 
@@ -65,7 +68,7 @@
       sheet.render(data);
       sheet.addText({
         text: 'TÍTULO',
-        x: 1800 / 2,
+        x: 1000 / 2,
         y: 25,
         xBasePos: 'center'
       });

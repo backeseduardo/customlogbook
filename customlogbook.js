@@ -7,6 +7,7 @@ function LogBook(parent, options = {}) {
   this.options.height = this.options.height || 580;
   // translate options can se the base position for the chart
   this.options.translate = this.options.translate || { x: 0, y: 0 };
+  this.options.lang = this.options.lang || { totalTime: 'Total time' };
   
   this.options.columnWidth = (this.options.width - 200) / 24;
 
@@ -128,6 +129,11 @@ LogBook.prototype.render = function(data) {
   this.cx.fillText(total, this.options.width - 95, 40 * this.options.lines + 70);
   this.cx.restore();
   this.cx.stroke();
+
+  this.cx.save();
+  this.cx.font = '10px Monospace';
+  this.cx.fillText(this.options.lang.totalTime, this.options.width - 95, 40 * this.options.lines + 90);
+  this.cx.restore();
 
   // line for the total summary
   this.cx.save();
