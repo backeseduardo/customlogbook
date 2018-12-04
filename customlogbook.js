@@ -124,7 +124,7 @@ LogBook.prototype.render = function(data) {
   this.cx.save();
   this.cx.font = '20px Monospace';
   totais.forEach((total, label) => {
-    this.cx.fillText(total, this.options.width - 95, 40 * label + 70);
+    this.cx.fillText((Math.round(total * 100) / 100).toString(), this.options.width - 95, 40 * label + 70);
   });
   this.cx.fillText(total, this.options.width - 95, 40 * this.options.lines + 70);
   this.cx.restore();
@@ -148,18 +148,19 @@ LogBook.prototype.render = function(data) {
   this.cx.beginPath();
   this.cx.strokeStyle = 'black';
   this.cx.lineWidth = 2;
-  data.forEach(row => {
+  data.forEach((row, index) => {
     if (row.hasOwnProperty('description')) {
       this.cx.moveTo(100 + (row.begin * this.options.columnWidth), 40 * this.options.lines + 40);
-      this.cx.lineTo(100 + (row.begin * this.options.columnWidth), 40 * this.options.lines + 70);
-      this.cx.lineTo(100 + (row.begin * this.options.columnWidth) - 135, 40 * this.options.lines + this.options.height / 2);
+      this.cx.lineTo(100 + (row.begin * this.options.columnWidth), 40 * this.options.lines + 40 * (index + 1));
+      // this.cx.lineTo(100 + (row.begin * this.options.columnWidth) - 135, 40 * this.options.lines + this.options.height / 2);
+      this.cx.lineTo(row.begin * this.options.columnWidth - this.cx.measureText(row.description).width, 40 * this.options.lines + 40 * (index + 1));
 
       this.cx.save();
-      this.cx.font = '16px Monospace';
-      this.cx.translate(100 + (row.begin * this.options.columnWidth) - 135, 40 * this.options.lines + this.options.height / 2);
-      this.cx.rotate(-0.29*Math.PI);
-      this.cx.fillText(row.description, 0, -10, 175);
-      this.cx.fillText(row.description, 0, 20, 175);
+      this.cx.font = '12px Monospace';
+      // this.cx.translate(100 + (row.begin * this.options.columnWidth) - 135, 40 * this.options.lines + this.options.height / 2);
+      // this.cx.rotate(-0.29*Math.PI);
+      this.cx.fillText(row.description, row.begin * this.options.columnWidth - this.cx.measureText(row.description).width + 5, 40 * this.options.lines + 40 * (index + 1) - 5);
+      // this.cx.fillText(row.description, 0, 20, 175);
       this.cx.restore();
     }
   });
