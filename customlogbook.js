@@ -119,23 +119,25 @@ LogBook.prototype.render = function(data) {
     total += row.end - row.begin;
   });
 
-  // this.cx.save();
-  // this.cx.font = '20px Monospace';
-  // totais.forEach((total, label) => {
-  //   this.cx.fillText(total, this.options.width - 95, 40 * label + 70);
-  // });
-  // this.cx.fillText(total, this.options.width - 95, 40 * this.options.lines + 70);
-  // this.cx.restore();
+  // time summary
+  this.cx.save();
+  this.cx.font = '20px Monospace';
+  totais.forEach((total, label) => {
+    this.cx.fillText(total, this.options.width - 95, 40 * label + 70);
+  });
+  this.cx.fillText(total, this.options.width - 95, 40 * this.options.lines + 70);
+  this.cx.restore();
   this.cx.stroke();
 
-  // this.cx.save();
-  // this.cx.beginPath();
-  // this.cx.strokeStyle = 'black';
-  // this.cx.lineWidth = 1;
-  // this.cx.moveTo(this.options.width - 95, 40 * this.options.lines + 75);
-  // this.cx.lineTo(this.options.width - 20, 40 * this.options.lines + 75);
-  // this.cx.stroke();
-  // this.cx.restore();
+  // line for the total summary
+  this.cx.save();
+  this.cx.beginPath();
+  this.cx.strokeStyle = 'black';
+  this.cx.lineWidth = 1;
+  this.cx.moveTo(this.options.width - 95, 40 * this.options.lines + 75);
+  this.cx.lineTo(this.options.width - 20, 40 * this.options.lines + 75);
+  this.cx.stroke();
+  this.cx.restore();
 };
 
 LogBook.prototype.addText = function(textOpts) {
