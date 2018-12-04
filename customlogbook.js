@@ -138,6 +138,27 @@ LogBook.prototype.render = function(data) {
   this.cx.lineTo(this.options.width - 20, 40 * this.options.lines + 75);
   this.cx.stroke();
   this.cx.restore();
+
+  this.cx.beginPath();
+  this.cx.strokeStyle = 'black';
+  this.cx.lineWidth = 2;
+  data.forEach(row => {
+    if (row.hasOwnProperty('description')) {
+      this.cx.moveTo(100 + (row.begin * this.options.columnWidth), 40 * this.options.lines + 40);
+      this.cx.lineTo(100 + (row.begin * this.options.columnWidth), 40 * this.options.lines + 70);
+      this.cx.lineTo(100 + (row.begin * this.options.columnWidth) - 135, 40 * this.options.lines + this.options.height / 2);
+
+      this.cx.save();
+      this.cx.font = '16px Monospace';
+      this.cx.translate(100 + (row.begin * this.options.columnWidth) - 135, 40 * this.options.lines + this.options.height / 2);
+      this.cx.rotate(-0.29*Math.PI);
+      this.cx.fillText(row.description, 0, -10, 175);
+      this.cx.fillText(row.description, 0, 20, 175);
+      this.cx.restore();
+    }
+  });
+
+  this.cx.stroke();
 };
 
 LogBook.prototype.addText = function(textOpts) {

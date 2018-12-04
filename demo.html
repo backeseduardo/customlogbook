@@ -18,12 +18,12 @@
     const LABELS = [
       'PARADO',
       'LENTA',
-      'MOVIMENTO'
+      'MOVIMENTO',
     ];
 
     const sheet = new LogBook(document.getElementById('sheet'), {
       width: 1800,
-      height: 500,
+      height: 400,
       labels: LABELS,
       translate: {
         x: 0,
@@ -42,17 +42,20 @@
         {
           label: LogBook.LENTA,
           begin: 8,
-          end: 8.25
+          end: 8.25,
+          description: 'teste'
         },
         {
           label: LogBook.MOVIMENTO,
           begin: 8.25,
-          end: 12
+          end: 12,
+          // description: 'teste'
         },
         {
           label: LogBook.PARADO,
           begin: 12,
-          end: 24
+          end: 24,
+          description: 'teste'
         }
       ];
 
