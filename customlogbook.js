@@ -124,9 +124,9 @@ LogBook.prototype.render = function(data) {
   this.cx.save();
   this.cx.font = '20px Monospace';
   totais.forEach((total, label) => {
-    this.cx.fillText((Math.round(total * 100) / 100).toString(), this.options.width - 95, 40 * label + 70);
+    this.cx.fillText(this.formatHour(total), this.options.width - 95, 40 * label + 70);
   });
-  this.cx.fillText(total, this.options.width - 95, 40 * this.options.lines + 70);
+  this.cx.fillText(this.formatHour(total), this.options.width - 95, 40 * this.options.lines + 70);
   this.cx.restore();
   this.cx.stroke();
 
@@ -148,20 +148,24 @@ LogBook.prototype.render = function(data) {
   this.cx.beginPath();
   this.cx.strokeStyle = 'black';
   this.cx.lineWidth = 2;
-  data.forEach((row, index) => {
+
+  let descriptionIndex = 1;
+  data.forEach(row => {
     if (row.hasOwnProperty('description')) {
-      this.cx.moveTo(100 + (row.begin * this.options.columnWidth), 40 * this.options.lines + 40);
-      this.cx.lineTo(100 + (row.begin * this.options.columnWidth), 40 * this.options.lines + 40 * (index + 1));
-      // this.cx.lineTo(100 + (row.begin * this.options.columnWidth) - 135, 40 * this.options.lines + this.options.height / 2);
-      this.cx.lineTo(row.begin * this.options.columnWidth - this.cx.measureText(row.description).width, 40 * this.options.lines + 40 * (index + 1));
+      let x = 100 + (row.begin * this.options.columnWidth);
+      let y = 40 * this.options.lines + 40;
+      let textWidth = Math.ceil(this.cx.measureText(row.description).width);
+
+      this.cx.moveTo(x, y);
+      this.cx.lineTo(x, y + 20 * descriptionIndex);
+      this.cx.lineTo(x - textWidth - 50, y + 20 * descriptionIndex);
 
       this.cx.save();
       this.cx.font = '12px Monospace';
-      // this.cx.translate(100 + (row.begin * this.options.columnWidth) - 135, 40 * this.options.lines + this.options.height / 2);
-      // this.cx.rotate(-0.29*Math.PI);
-      this.cx.fillText(row.description, row.begin * this.options.columnWidth - this.cx.measureText(row.description).width + 5, 40 * this.options.lines + 40 * (index + 1) - 5);
-      // this.cx.fillText(row.description, 0, 20, 175);
+      this.cx.fillText(row.description, x - textWidth - 50, y + 20 * descriptionIndex - 5);
       this.cx.restore();
+
+      descriptionIndex++;
     }
   });
 
@@ -194,4 +198,23 @@ LogBook.prototype.addText = function(textOpts) {
   }
 
   this.cx.restore();
+};
+
+LogBook.prototype.formatHour = function(hour) {
+  hour = parseFloat(hour);
+
+  let hours = Math.floor(hour);
+  let minutes = Math.round((hour - hours) * 60);
+
+  hours = hours.toString();
+  if (hours.length < 2) {
+    hours = `0${hours}`;
+  }
+
+  minutes = minutes.toString();
+  if (minutes.length < 2) {
+    minutes = `0${minutes}`;
+  }
+
+  return `${hours}:${minutes}`;
 };
