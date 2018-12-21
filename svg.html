@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+  <style>
+    .a:hover {
+      stroke-width: 7px!important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- <svg width="1000" height="200" id="svg"> -->
+    <!-- <rect width="90%" height="90%" y=10% style="fill:rgb(255, 255, 255);stroke-width:1;stroke:rgb(0,0,0)" /> -->
+  <!-- </svg> -->
+
+  <svg id="svg" width="1000" height="200">
+    <g id="svg-hours"></g>
+    <g id="svg-grid" transform="translate(0, 15)">
+      <line x1="0" y1="0" x2="100%" y2="0" style="stroke:rgb(0,0,0);stroke-width:1;" />
+    </g>
+    <g id="svg-a" transform="translate(0, 15)">
+      <line class="a" x1="0" y1="10%" x2="23%" y2="10%" style="stroke:rgb(2, 90, 255);stroke-width:3;" />
+      <!-- <line x1="23%" y1="10%" x2="23%" y2="40%" style="stroke:rgb(2, 90, 255);stroke-width:3;" /> -->
+      <line class="a" x1="23%" y1="40%" x2="50%" y2="40%" style="stroke:rgb(2, 90, 255);stroke-width:3;" />
+    </g>
+    <!-- <line x1="0" y1="0" x2="0" y2="100%" style="stroke:rgb(0,0,0);stroke-width:1;" /> -->
+    <!-- <line x1="1000" y1="0" x2="1000" y2="200" style="stroke:rgb(0,0,0);stroke-width:1;" /> -->
+    <!-- <line x1="0" y1="200" x2="1000" y2="200" style="stroke:rgb(0,0,0);stroke-width:1;" /> -->
+  </svg>
+
+  <script>
+  (function() {
+    'use strict'
+    const $svgHours = document.getElementById('svg-hours');
+    const $svgGrid = document.getElementById('svg-grid');
+    const columnGap = 100 / 24;
+    const lines = 3;
+    const lineGap = 100 / 3;
+    
+    // laço para as horas
+    for (let i = 0; i < 25; i++) {
+      let percent = columnGap * i;
+      let hourString = i.toString();
+      
+      if (hourString.length < 2) {
+        hourString = '0'+hourString;
+      }
+
+      if (hourString !== '00' && hourString !== '24') {
+        $svgHours.innerHTML += `<text dx="-5" x="${percent}%" y="10" font-size="10">${hourString}</text>`;
+      }
+      $svgGrid.innerHTML += `<line x1="${percent}%" y1="0" x2="${percent}%" y2="100%" style="stroke:rgb(0,0,0);stroke-width:1;" />`;
+
+      // intervalos de 1/4 de hora entre as colunas
+      let subGap = columnGap / 4;
+      for (let x = 0; x < 4; x++) {
+        let p = percent + subGap * x;
+        let h = 3;
+        if (x % 2 === 0) {
+          h = 6;
+        }
+        $svgGrid.innerHTML += `<line x1="${p}%" y1="0" x2="${p}%" y2="${h}%" style="stroke:rgb(0,0,0);stroke-width:1;" />`;
+      }
+    }
+
+    // laço para as linhas
+    for (let i = 0; i < lines; i++) {
+      let percent = lineGap * (i + 1);
+      $svgGrid.innerHTML += `<line x1="0" y1="calc(${percent}% - 15)" x2="100%" y2="calc(${percent}% - 15)" style="stroke:rgb(0,0,0);stroke-width:1;" />`;
+    }
+  })();
+  </script>
+  
+</body>
+</html>

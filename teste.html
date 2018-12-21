@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html, body {
+      font-family: monospace;
+    }
+    .item {
+      width: 50px;
+      height: 100px;
+      background-color: #cecece;
+      cursor: pointer;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+    .item--menu {
+      /* display: none; */
+      position: relative;
+      top: 0;
+      left: 50px;
+      width: 100px;
+      /* height: 300px; */
+      background-color: #8360ff;
+      transition: .3s ease-in;
+      transform-origin: top left;
+      transform: scale(0);
+      display: flex;
+      flex-direction: column;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-bottom: 10px;
+    }
+    .item--menu--a {
+      color: #fff;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+
+    .item:hover {
+      background-color: #5fff20;
+    }
+    .item:hover .item--menu {
+      /* display: block; */
+      transform: scale(1);
+    }
+  </style>
+</head>
+<body>
+
+  <div style="
+    display: flex;
+    flex-direction: row;
+  ">
+    <div class="item">
+      <div class="item--menu">
+        <a href="#mover" class="item--menu--a">Mover</a>
+        <a href="#excluir" class="item--menu--a">Excluir</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item--menu">
+        <a href="#mover" class="item--menu--a">Mover</a>
+        <a href="#excluir" class="item--menu--a">Excluir</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item--menu">
+        <a href="#mover" class="item--menu--a">Mover</a>
+        <a href="#excluir" class="item--menu--a">Excluir</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item--menu">
+        <a href="#mover" class="item--menu--a">Mover</a>
+        <a href="#excluir" class="item--menu--a">Excluir</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item--menu">
+        <a href="#mover" class="item--menu--a">Mover</a>
+        <a href="#excluir" class="item--menu--a">Excluir</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item--menu">
+        <a href="#mover" class="item--menu--a">Mover</a>
+        <a href="#excluir" class="item--menu--a">Excluir</a>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>
